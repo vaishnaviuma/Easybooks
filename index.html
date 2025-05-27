@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookStore - Your Online Book Haven</title>
+  <!-- Add FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!--fonts-->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Body and Container */
+  body {
+    background-color: #fdfdfd;
+    color: #333;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+  }
+
+  /* Header */
+  header {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo img {
+    height: 100px;
+    width: auto;
+  }
+
+  nav {
+    float: right;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 60px; /* Increased gap for more space */
+    align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: #ff6f61;
+  }
+
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url('https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+    color: #fff;
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  /* Hero Heading and Subtagline */
+  .hero-heading {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-subtagline {
+    font-size: 22px;
+    font-weight: 400;
+    color: #f0f0f0;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Buttons */
+  .btn {
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #e85c50;
+  }
+
+  /* Book Display Section */
+  .book-section {
+    padding: 50px 0;
+    background: linear-gradient(to right, #f9f9f9, #fff);
+  }
+  .book-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: flex-start; /* Ensures items align left after filtering */
+}
+
+  /*book card hover*/
+  .book-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+   padding: 15px;
+ }
+
+   
+.book-card img {
+border-radius: 8px;
+}
+ .book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+ }
+
+
+ .book-card {
+  width: 22%; /* was 30% */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+
+.book-card img {
+  width: 100%;
+  height: 300px; /* was 500px */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+  .book-card h3 {
+  font-size: 18px;
+  margin: 15px 0 10px;
+}
+
+  .book-card p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .book-card .price {
+    font-size: 18px;
+    color: #ff6f61;
+    font-weight: bold;
+  }
+
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .nav-links {
+      flex-direction: column;
+      gap: 20px; /* Adjusted gap for mobile */
+    }
+
+    .hero h1 {
+      font-size: 36px;
+    }
+
+    .hero p {
+      font-size: 18px;
+    }
+
+  .book-card {
+    width: 48%; /* more space-efficient on mobile */
+  }
+
+  }
+
+  /* Dropdown Styles */
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 10px 20px;
+    list-style: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    min-width: 400px;
+    max-width: 600px;
+    column-count: 2;
+    column-gap: 30px;
+    overflow: hidden;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .dropdown-menu li {
+    padding: 6px 0;
+  }
+
+  .dropdown-menu li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s ease;
+  }
+
+  .dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+  }
+
+  /* Hover Effect to Show Dropdown */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  /* Adjusted for responsiveness */
+  @media (max-width: 768px) {
+    .dropdown-menu {
+      min-width: 100%;
+      column-count: 1; /* Single column on smaller screens */
+    }
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Body and Container */
+  body {
+    background-color: #fdfdfd;
+    color: #333;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+  }
+
+  /* Header */
+  header {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo img {
+    height: 100px;
+    width: auto;
+  }
+
+  nav {
+    float: right;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 60px; /* Increased gap for more space */
+    align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: #ff6f61;
+  }
+
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url('https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1500&q=80') no-repeat center center/cover;
+    color: #fff;
+    padding: 100px 20px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .hero p {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  /* Hero Heading and Subtagline */
+  .hero-heading {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-subtagline {
+    font-size: 22px;
+    font-weight: 400;
+    color: #f0f0f0;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Buttons */
+  .btn {
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  .btn:hover {
+    background-color: #e85c50;
+  }
+
+  /* Book Display Section */
+  .book-section {
+    padding: 50px 0;
+    background: linear-gradient(to right, #f9f9f9, #fff);
+  }
+  .book-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: flex-start; /* Ensures items align left after filtering */
+}
+
+  /*book card hover*/
+  .book-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+   padding: 15px;
+ }
+
+   
+.book-card img {
+border-radius: 8px;
+}
+ .book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+ }
+
+
+ .book-card {
+  width: 22%; /* was 30% */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+
+.book-card img {
+  width: 100%;
+  height: 300px; /* was 500px */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+  .book-card h3 {
+  font-size: 18px;
+  margin: 15px 0 10px;
+}
+
+  .book-card p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .book-card .price {
+    font-size: 18px;
+    color: #ff6f61;
+    font-weight: bold;
+  }
+
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .nav-links {
+      flex-direction: column;
+      gap: 20px; /* Adjusted gap for mobile */
+    }
+
+    .hero h1 {
+      font-size: 36px;
+    }
+
+    .hero p {
+      font-size: 18px;
+    }
+
+  .book-card {
+    width: 48%; /* more space-efficient on mobile */
+  }
+
+  }
+
+  /* Dropdown Styles */
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 10px 20px;
+    list-style: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    min-width: 400px;
+    max-width: 600px;
+    column-count: 2;
+    column-gap: 30px;
+    overflow: hidden;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .dropdown-menu li {
+    padding: 6px 0;
+  }
+
+  .dropdown-menu li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s ease;
+  }
+
+  .dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+  }
+
+  /* Hover Effect to Show Dropdown */
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  /* Adjusted for responsiveness */
+  @media (max-width: 768px) {
+    .dropdown-menu {
+      min-width: 100%;
+      column-count: 1; /* Single column on smaller screens */
+    }
+  }
+
+  
+  #addBookBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background-color: #28a745; /* Green */
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: background-color 0.3s;
+  }
+  
+  #addBookBtn:hover {
+    background-color: #218838;
+  }
+
+  
+
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <img src="https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_2ed0526924f72fc1210e53b335fe268c/easy-books.png" alt="EasyBooks Logo">
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li class="dropdown">
+            <a href="#"> <i class="fas fa-filter"></i> Filter ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-filter="thriller">Thriller</a></li>
+              <li><a href="#" data-filter="suspense">Suspense</a></li>
+              <li><a href="#" data-filter="fantasy">Fantasy</a></li>
+              <li><a href="#" data-filter="science fiction">Science Fiction</a></li>
+              <li><a href="#" data-filter="non-fiction">Non-fiction</a></li>
+              <li><a href="#" data-filter="contemporary romance">Contemporary Romance</a></li>
+              <li><a href="#" data-filter="romance">Romance</a></li>
+              <li><a href="#" data-filter="mystery">Mystery</a></li>
+              <li><a href="#" data-filter="horror">Horror</a></li>
+              <li><a href="#" data-filter="historical fiction">Historical Fiction</a></li>
+              <li><a href="#" data-filter="young adult">Young Adult</a></li>
+              <li><a href="#" data-filter="children book">Children's book</a></li>
+              <li><a href="#" data-filter="self-help">Self-Help</a></li>
+              <li><a href="#" data-filter="biography">Biography</a></li>
+              <li><a href="#" data-filter="memoir">Memoir</a></li>
+              <li><a href="#" data-filter="poetry">Poetry</a></li>
+              <li><a href="#" data-filter="graphic novels">Graphic Novels</a></li>
+              <li><a href="#" data-filter="classic literature">Classic Literature</a></li>
+              <li><a href="#" data-filter="adventure">Adventure</a></li>
+              <li><a href="#" data-filter="spirituality">Spirituality</a></li>
+              <li><a href="#" data-filter="all">All Genre</a></li>
+            </ul>
+          </li>
+         
+          <li><a href="cart.php"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+          <!-- Profile Icon (before Login) -->
+          <li><a href="profile.php"><i class="fas fa-user-circle"></i> Profile</a></li>
+          <li>
+  <a href="login.php" title="Login">
+    <i class="fas fa-sign-in-alt"></i> Login
+  </a>
+</li>
+
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-heading">Discover Your Next Great Read</h1>
+      <p class="hero-subtagline">Where stories come alive — curated collections for every kind of reader.</p>
+    </div>
+  </section>
+
+  <!-- Book Display Section -->
+  <section class="book-section">
+    <div class="container">
+      <div class="book-container">
+        
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const filterLinks = document.querySelectorAll(".dropdown-menu a");
+      const bookCards = document.querySelectorAll(".book-card");
+  
+      filterLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const filter = this.getAttribute("data-filter").toLowerCase();
+  
+          bookCards.forEach(card => {
+            const genre = card.getAttribute("data-genre").toLowerCase();
+            if (filter === "all" || genre === filter) {
+              card.style.display = "block";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+    });
+  </script>
+  <!-- Plus Button
+  <button id="addBookBtn" title="Add Book" onclick="window.location.href='add-book.html';">+</button> -->
+  
+  <!-- Footer Section -->
+   <!-- Footer -->
+  <footer style="background-color: #f8f8f8; border-top: 1px solid #eaeaea; padding: 60px 0; font-size: 15px; color: #555;">
+    <div class="container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px;   padding-left: 100px; ">
+    
+      <!-- About Section -->
+      <div style="flex: 1 1 250px;">
+        <h3 style="color: #333; font-size: 18px; margin-bottom: 15px;">About BookStore</h3>
+        <p style="line-height: 1.7;">EasyBooks is your digital escape into the world of stories, ideas, and imagination. Curated collections for every kind of reader.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div style="flex: 1 1 150px;">
+       <h3 style="color: #333; font-size: 18px; margin-bottom: 15px;">Quick Links</h3>
+       <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="text-decoration: none; color: #555; display: block; margin-bottom: 10px;">Home</a></li>
+        <li><a href="#" style="text-decoration: none; color: #555; display: block; margin-bottom: 10px;">Categories</a></li>
+        <li><a href="#" style="text-decoration: none; color: #555; display: block; margin-bottom: 10px;">Contact</a></li>
+        <li><a href="#" style="text-decoration: none; color: #555; display: block; margin-bottom: 10px;">Login</a></li>
+       </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div style="flex: 1 1 200px;">
+        <h3 style="color: #333; font-size: 18px; margin-bottom: 15px;">Contact</h3>
+        <p style="margin-bottom: 10px;"><i class="fas fa-envelope"></i> support@easybooks.com</p>
+        <p style="margin-bottom: 10px;"><i class="fas fa-phone"></i> +91-98765-43210</p>
+        <p><i class="fas fa-map-marker-alt"></i> New Delhi, India</p>
+      </div>
+
+    <!-- Social Media -->
+      <div style="flex: 1 1 180px;">
+        <h3 style="color: #333; font-size: 18px; margin-bottom: 15px;">Follow Us</h3>
+        <div style="display: flex; gap: 15px;">
+          <a href="#" style="color: #555; font-size: 18px;"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" style="color: #555; font-size: 18px;"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color: #555; font-size: 18px;"><i class="fab fa-instagram"></i></a>
+          <a href="#" style="color: #555; font-size: 18px;"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; font-size: 14px; color: #888;">
+      &copy; 2025 Easybooks. All rights reserved.
+    </div>
+  </footer>
+  <!-- <script>
+     document.addEventListener("DOMContentLoaded", function () {
+        // Get the books from localStorage
+        const books = JSON.parse(localStorage.getItem("books")) || [];
+
+        // Select the book container where books will be displayed
+        const bookContainer = document.querySelector(".book-container");
+
+        // Loop through the books and create the HTML for each book card
+        books.forEach(book => {
+          const bookCard = document.createElement("div");
+          bookCard.classList.add("book-card");
+          bookCard.setAttribute("data-genre", book.genre.toLowerCase());
+
+          bookCard.innerHTML = `
+            <img src="${book.imageUrl}" alt="${book.title}">
+            <h3>${book.title}</h3>
+            <p>By ${book.author}</p>
+            <p class="price">Rs.${book.price}</p>
+            `;
+           // Add click event listener to go to book-detail.html with data
+            bookCard.addEventListener("click", () => {
+              localStorage.setItem("selectedBook", JSON.stringify(book));
+              window.location.href = "book-detail.html";
+            });
+
+           // Append the new book card to the book container
+            bookContainer.appendChild(bookCard);
+          }
+        );
+
+          // Add the filter functionality for genres
+         const filterLinks = document.querySelectorAll(".dropdown-menu a");
+          const bookCards = document.querySelectorAll(".book-card");
+
+           filterLinks.forEach(link => {
+             link.addEventListener("click", function (e) {
+             e.preventDefault();
+             const filter = this.getAttribute("data-filter").toLowerCase();
+
+             bookCards.forEach(card => {
+              const genre = card.getAttribute("data-genre").toLowerCase();
+               if (filter === "all" || genre === filter) {
+               card.style.display = "block";
+              } else {
+                 card.style.display = "none";
+             }
+        });
+      });
+    });
+  });
+</script> -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const bookContainer = document.querySelector(".book-container");
+
+  fetch("get_books.php")
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const books = data.books;
+
+        books.forEach(book => {
+          const card = document.createElement("div");
+          card.classList.add("book-card");
+          card.setAttribute("data-genre", book.genre.toLowerCase());
+
+          card.innerHTML = `
+            <img src="${book.image_url}" alt="${book.title}">
+            <h3>${book.title}</h3>
+            <p>By ${book.author}</p>
+            <p class="price">Rs.${book.price}</p>
+          `;
+
+          card.addEventListener("click", () => {
+            //localStorage.setItem("selectedBook", JSON.stringify(book));
+            window.location.href = `book-detail.php?id=${book.id}`;
+
+          });
+
+          bookContainer.appendChild(card);
+        });
+
+        // Add filter event listeners
+        setupFilters();
+      } else {
+        bookContainer.innerHTML = "<p>Failed to load books.</p>";
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching books:", error);
+      bookContainer.innerHTML = "<p>Error loading books.</p>";
+    });
+
+  function setupFilters() {
+    const filterLinks = document.querySelectorAll(".dropdown-menu a");
+    filterLinks.forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const filter = this.getAttribute("data-filter").toLowerCase();
+        const cards = document.querySelectorAll(".book-card");
+
+        cards.forEach(card => {
+          const genre = card.getAttribute("data-genre").toLowerCase();
+          card.style.display = (filter === "all" || genre === filter) ? "block" : "none";
+        });
+      });
+    });
+  }
+});
+</script>
+
+<!-- <script>
+  const books = [
+     
+  ];
+
+  document.querySelectorAll('.book-card').forEach((card, index) => {
+    card.addEventListener('click', () => {
+      localStorage.setItem('selectedBook', JSON.stringify(books[index]));
+      window.location.href = 'book-detail.html';
+    });
+  });
+</script> -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Filter handling...
+  const filterLinks = document.querySelectorAll(".dropdown-menu a");
+  const bookCards = document.querySelectorAll(".book-card");
+  filterLinks.forEach(link => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const filter = this.getAttribute("data-filter").toLowerCase();
+      bookCards.forEach(card => {
+        const genre = card.getAttribute("data-genre").toLowerCase();
+        card.style.display = (filter === "all" || genre === filter) ? "block" : "none";
+      });
+    });
+  });
+  // Click to book detail
+  bookCards.forEach(card => {
+    card.addEventListener("click", function () {
+      const title = this.querySelector("h3").textContent.trim();
+      window.location.href = `book-detail.php?title=${encodeURIComponent(title)}`;
+    });
+  });
+});
+</script> 
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const authSection = document.getElementById("auth-section");
+    const loggedInUser = localStorage.getItem("loggedInUser"); // Can be a username, ID, or token
+
+    if (loggedInUser) {
+      authSection.innerHTML = `
+        <a href="profile.html" title="Profile"><i class="fas fa-user-circle"></i></a>
+        <a href="#" id="logoutBtn" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+      `;
+
+      // Add logout functionality
+      document.getElementById("logoutBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+        localStorage.removeItem("loggedInUser");
+        window.location.reload();
+      });
+    } else {
+      authSection.innerHTML = `<a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>`;
+    }
+  });
+</script>
+
+
+</body>
+</html>
